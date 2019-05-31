@@ -1,0 +1,27 @@
+pipeline {
+    agent any 
+    
+    stages {
+        stage('Stage One'){
+            steps{
+                sh "echo *** This is ${env.JOB_NAME} ,and We are stage one ***"
+            }
+        }
+        
+    stage('Stage Two'){
+        steps{
+                sh "echo ${env.BUILD_NUMBER}"
+                sh "echo ${env.NODE_NAME} , ${env.JOB_NAME}"
+            }
+        }
+
+        
+    stage('Stage Three'){
+        steps{
+                //Para1 Para2 在参数化构建 中定义的
+                sh "echo ${env.Para1}"
+                sh "echo ${env.Para2}"
+            }
+        }        
+    }
+}

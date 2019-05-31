@@ -1,0 +1,25 @@
+//declarative pipeline
+pipeline {
+    agent any 
+    
+    //每次运行后，*参数设置*这一块都会恢复原样（即下面的样子）
+    parameters {
+        string(name: 'COMMAND', defaultValue: '', description: 'Type the command:')
+    }
+    
+    stages {
+        stage('Stage One'){
+            steps{
+                sh "echo *** This is Stage One ***"
+            }
+        }
+        
+        stage('Stage Two'){
+            steps{
+                sh "echo ${env.BUILD_NUMBER}"
+                sh "echo ${env.NODE_NAME} , ${env.JOB_NAME}"
+            }
+        }
+
+    }   
+}

@@ -1,0 +1,39 @@
+//declarative pipeline
+pipeline {
+    agent any 
+    
+    stages {
+        stage('Stage One'){
+            steps{
+                sh "echo *** This is Stage One ***"
+            }
+        }
+        
+        stage('Stage Two'){
+            steps{
+                sh "echo ${env.BUILD_NUMBER}"
+                sh "echo ${env.NODE_NAME} , ${env.JOB_NAME}"
+            }
+        }
+        
+        stage("Invoke second job without parameters"){
+            steps{
+                build job: 'second_job'
+                sleep 30
+           }
+        }  
+
+        stage("Invoke second job with parameters"){
+            steps{
+                //需要传递到second_job的参数 Para1、Para2
+                build job: 'second_job',
+                parameters:[
+                    string(name:'Para1',value:String.valueOf(JOB_NAME)),
+                    string(name:'Para2',value:String.valueOf(BUILD_NUMBER))
+                ]
+           }
+        }
+    }
+    
+}
+    
