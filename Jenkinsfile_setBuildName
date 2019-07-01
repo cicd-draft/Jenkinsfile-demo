@@ -1,0 +1,25 @@
+//declarative pipeline
+pipeline {
+    agent any 
+    
+    stages {
+        stage('Stage One'){
+            steps{
+                script{
+                    echo "This is Stage One"
+                    currentBuild.displayName = "${GTI_BRANCH}"
+                }
+            }
+        }
+        
+        stage('Stage Two'){
+            steps{
+                sh "echo ${env.BUILD_NUMBER}"
+                sh "echo ${env.NODE_NAME} , ${env.JOB_NAME}"
+            }
+        }
+ 
+    }
+    
+}
+    
