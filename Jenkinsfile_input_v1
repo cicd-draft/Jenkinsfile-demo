@@ -1,0 +1,45 @@
+//declarative pipeline
+pipeline {
+    agent any 
+
+    stages {
+        stage('\u26F9 Unit Test'){
+            steps{
+                sh "echo  I am stage: Unit Test"
+                sh 'sleep 5'
+            }
+        }
+
+        stage('\u270A Build jar'){
+            steps{
+                sh 'echo "-----Build stage-----"'      
+                }
+        }
+
+
+        stage('\u26F1 Deploy  DEV') {
+            steps{
+                sh 'echo "-----Deploy  DEV stage-----"'
+                sh 'sleep 10'
+            }
+        } 
+   
+        stage('\u26F1 Deploy  QA') {
+            options {
+              timeout(time: 30, unit: 'SECONDS') 
+            }
+            input {
+              message "Should we continue?"
+            }
+            steps {
+                echo "------I am processed-----"
+            }
+        } 
+        
+        stage('\u261D Api Test'){
+            steps{
+                sh 'echo "I am stage: Api Test"'
+            }
+        }
+    }   
+}
