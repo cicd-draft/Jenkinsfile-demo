@@ -1,9 +1,8 @@
 //declarative pipeline
 //simple input with timeout
 //Situation 1： process ,then execute all stage
-//Situation 2： Abort ,then stop execute current stage and after stage
+//Situation 2： Abort ,then stop execute current stage,but  execute the after stage
 //Situation 3： Timeout ,same with 2
-
 pipeline {
     agent any 
 
@@ -30,14 +29,13 @@ pipeline {
         } 
    
         stage('\u26F1 Deploy  QA') {
-            options {
-              timeout(time: 30, unit: 'SECONDS') 
-            }
-            input {
-              message "Should we continue?"
-            }
             steps {
-                echo "------I am processed-----"
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    timeout ( time: 30, unit: "SECONDS" ) {
+                        input(message: 'Deploy this build to QA?')
+                    }
+                        echo "------I am processed-----"
+                }
             }
         } 
         
@@ -46,5 +44,5 @@ pipeline {
                 sh 'echo "I am stage: Api Test"'
             }
         }
-    }   
+    }
 }
