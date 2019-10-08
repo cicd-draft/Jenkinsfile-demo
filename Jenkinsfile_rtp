@@ -1,0 +1,27 @@
+//please install plugin : Rich Text Publisher Plugin
+pipeline {
+    agent any
+    stages{
+        stage('some'){
+            steps{
+                sh 'echo test'
+            }
+                    
+            post {
+                always {
+                    rtp parserName: 'HTML', stableText: '<h3>From some stage -> stable </h3>', unstableText: '<h6>unstable </h6>'
+                }
+            }
+        }
+
+        stage('rtp stage'){
+            steps{
+                script{
+                  currentBuild.result = "SUCCESS"
+                  rtp parserName: 'HTML', stableText: '<h3>from rtp stage -> stable </h3>'                    
+                }
+
+            }
+        }
+    }
+}
