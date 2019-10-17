@@ -20,3 +20,4 @@ doc： https://wiki.jenkins.io/display/JENKINS/Groovy+Postbuild+Plugin
 
 please install plugin : Rich Text Publisher Plugin
 作用： 可以用来在 单个build 页面展示，日志链接、监控链接、二维码、安全报告页面等
+[demo](https://github.com/cicd-draft/Jenkinsfile-demo/blob/master/Jenkinsfile_rtp)
